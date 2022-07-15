@@ -63,6 +63,7 @@ public class AdminController {
 		session.setAttribute("adminListRegion", adminListRegion);
 		session.setAttribute("upPath", upPath);
 		return "admin/main";
+		
 	}
 
 	
