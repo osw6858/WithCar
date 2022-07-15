@@ -119,6 +119,7 @@ public class AdminController {
 		if (map.containsKey("ccr_car5")) ccr_car += "캠핑카  ";
 		dto.setCcr_car(ccr_car.trim());
 		
+		
 		//바닥종류
 		String ccr_ground = "";
 		if (map.containsKey("ccr_ground1")) ccr_ground += "맨흙  ";
