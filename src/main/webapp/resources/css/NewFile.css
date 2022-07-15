@@ -1,0 +1,254 @@
+@charset "EUC-KR";
+	
+	div#header{background-color:#F3F2ED;}
+div#header h1{height:80px;line-height:80px;margin:0;padding-left:10px;}
+div#content p{line-height:1.4}
+div#navigation{background:#F6F0E0;}
+div#navigation ul{margin:15px 0; padding:0; list-style-type:none;}
+div#navigation li{margin-bottom:5px;}
+div#extra{background:#CCC8B3; height:300px; width:500px;}
+div#footer{background:#BFBD93;}
+div#footer p{margin:0;padding:5px 10px}
+div#wrapper{float:right;width:100%;margin-left:-200px}
+div#content{margin-left:200px}
+div#navigation{float:left;width:200px;height:200px}
+div#extra{float:left;clear:left;width:500px;height:200px}
+div#footer{clear:both;width:100%; height:50px }
+
+/*
+Copyright (c) 2007, Yahoo! Inc. All rights reserved.
+Code licensed under the BSD License:
+http://developer.yahoo.net/gm/license.txt
+version: 2.2.2
+*/
+/* for all templates and grids */
+body{text-align:center;}
+#ft{clear:both;}
+/**/
+/* 750 centered, and backward compatibility */ 
+#doc,#doc2,#doc3,.gm-t1,.gm-t2,.gm-t3,.gm-t4,.gm-t5,.gm-t6,.gm-t7 {
+	margin:auto;text-align:left;
+	width:57.69em;*width:56.3em;min-width:750px;}
+/* 950 centered */ 
+#doc2 {
+	width:73.074em;*width:71.313em;min-width:950px;}
+/* 100% with 10px viewport side matting */ 
+#doc3 {
+	margin:auto 10px; /* not for structure, but so content doesn't bleed to edge */
+	width:auto;}
+	
+/* below required for all fluid grids; adjust widths and margins above accordingly */
+
+	/* to preserve source-order independence for Gecko */
+	.gm-b{position:relative;}
+	.gm-b{_position:static;} /* for IE < 7 */
+	#gm-main .gm-b{position:static;} 
+
+#gm-main {width:100%;}
+.gm-t1 #gm-main,
+.gm-t2 #gm-main,
+.gm-t3 #gm-main{float:right;margin-left:-25em;/* IE: preserve layout at narrow widths */}
+
+.gm-t4 #gm-main,
+.gm-t5 #gm-main,
+.gm-t6 #gm-main{float:left;margin-right:-25em;/* IE: preserve layout at narrow widths */}
+
+.gm-t1 .gm-b {
+	float:left;
+    width:12.3207em;*width:12.0106em;}
+.gm-t1 #gm-main .gm-b{
+    margin-left:13.3207em;*margin-left:13.0106em;
+}
+
+.gm-t2 .gm-b {
+	float:left;
+    width:13.8456em;*width:13.512em;}
+.gm-t2 #gm-main .gm-b {
+    margin-left:14.8456em;*margin-left:14.512em;
+}
+
+.gm-t3 .gm-b {
+	float:left;
+    width:23.0759em;*width:22.52em;}
+.gm-t3 #gm-main .gm-b {
+    margin-left:24.0759em;*margin-left:23.52em;
+}
+
+.gm-t4 .gm-b {
+	float:right;
+    width:13.8456em;*width:13.512em;}
+.gm-t4 #gm-main .gm-b {
+    margin-right:14.8456em;*margin-right:14.512em;
+}
+
+.gm-t5 .gm-b {
+	float:right;
+    width:18.4608em;*width:18.016em;}
+.gm-t5 #gm-main .gm-b {
+    margin-right:19.4608em;*margin-right:19.016em;
+}
+
+.gm-t6 .gm-b {
+	float:right;
+    width:23.0759em;*width:22.52em;}
+.gm-t6 #gm-main .gm-b {
+    margin-right:24.0759em;*margin-right:23.52em;
+}
+
+.gm-t7 #gm-main .gm-b {
+	display:block;margin:0 0 1em 0;
+}
+#gm-main .gm-b {float:none;width:auto;}
+/* GRIDS (not TEMPLATES) */
+.gm-g .gm-u, 
+.gm-g .gm-g, 
+.gm-gc .gm-u,
+.gm-gc .gm-g .gm-u,
+.gm-ge .gm-u, 
+.gm-gf .gm-u{float:right;display:inline;}
+.gm-g div.first, 
+.gm-gc div.first,
+.gm-gc div.first div.first,
+.gm-gd div.first, 
+.gm-ge div.first, 
+.gm-gf div.first{float:left;}
+.gm-g .gm-u, 
+.gm-g .gm-g{width:49.1%;}
+.gm-g .gm-g .gm-u,
+.gm-gc .gm-g .gm-u {width:48.1%;}
+.gm-gb .gm-u, 
+.gm-gc .gm-u, 
+.gm-gd .gm-u{float:left;margin-left:2%;*margin-left:1.895%;width:32%;}
+.gm-gb div.first, 
+.gm-gc div.first, 
+.gm-gd div.first{margin-left:0;}
+.gm-gc div.first, 
+.gm-gd .gm-u{width:66%;}
+.gm-gd div.first{width:32%;}
+.gm-ge .gm-u{width:24%;}
+.gm-ge div.first, 
+.gm-gf .gm-u{width:74.2%;}
+.gm-gf div.first{width:24%;}
+.gm-ge div.first{width:74.2%;}
+#bd:after,
+.gm-g:after, 
+.gm-gb:after, 
+.gm-gc:after, 
+.gm-gd:after, 
+.gm-ge:after, 
+.gm-gf:after{content:".";display:block;height:0;clear:both;visibility:hidden;}
+#bd,
+.gm-g, 
+.gm-gb, 
+.gm-gc, 
+.gm-gd, 
+.gm-ge, 
+.gm-gf{zoom:1;}
+
+
+/* Basic Element Formatting */
+
+#header{
+	height:100px;
+	background-color:#F3F2ED;
+	margin:0;
+	padding:0;
+	}
+	
+#header h1{
+	font-size:1em;
+	margin:0;
+	padding:10px;
+	}
+	
+#header h1 a{
+	color:#000000;
+	background-color:#F3F2ED;
+	}
+	
+.content{
+	height:300px;
+	background:#CCC8B3;
+	border-top:#FFFFFF 2px solid;
+	margin:0;
+	padding:0;
+	}
+	
+#secondary{
+	height:300px;
+	background:#F6F0E0;
+	border-top:#FFFFFF 2px solid;
+	margin:0;
+	padding:0;
+	}
+	
+#secondaryFull{
+	height:50px;
+	background-color:#CFB59F;
+	border-top:#FFFFFF 2px solid;
+	margin:0;
+	padding:0;
+	}
+	
+#footer{
+	height:50px;
+	background:#BFBD93;
+	border-top:#FFFFFF 2px solid;
+	margin:0;
+	padding:0;
+	}
+	
+
+<style>
+/* 리셋 CSS */
+* {margin:0;padding:0;box-sizing:border-box;}
+ul, li {list-style:none;}
+
+/* 슬라이드 Style */
+.slidebox {max-width:300px;margin:0 auto;}
+.slidebox .slidelist {white-space:nowrap;font-size:0;overflow:hidden;}
+.slidebox .slidelist .slideitem {position:relative;display:inline-block;vertical-align:middle;width:100%;transition:all 1s;}
+.slidebox .slidelist .slideitem > a {display:block;width:auto;position:relative;}
+.slidebox .slidelist .slideitem > a img {max-width:100%;}
+.slidebox .slidelist .slideitem > a label {position:absolute;top:50%;transform:translateY(-50%);padding:20px;border-radius:50%;cursor:pointer;}
+.slidebox .slidelist .slideitem > a label.prev {left:20px;background:#333 url('images/left-arrow.png') center center / 50% no-repeat;}
+.slidebox .slidelist .slideitem > a label.next {right:20px;background:#333 url('images/right-arrow.png') center center / 50% no-repeat;}
+
+
+[name="slide"] {display:none;}
+#slide01:checked ~ .slidelist .slideitem {transform:translateX(0);animation:slide01 15s infinite;}
+#slide02:checked ~ .slidelist .slideitem {transform:translateX(-100%);animation:slide02 15s infinite;}
+#slide03:checked ~ .slidelist .slideitem {transform:translateX(-200%);animation:slide03 15s infinite;}
+
+
+@keyframes slide01 {
+	0% {left:0%;}
+	33% {left:0%;}
+	34% {left:-100%}
+	66% {left:-100%;}
+	67% {left:-200%;}
+	99% {left:-200%;}
+	100% {left:0%;}
+}
+
+@keyframes slide02 {
+	0% {left:0%;}
+	33% {left:0%;}
+	34% {left:-100%;}
+	66% {left:-100%;}
+	67% {left:100%;}
+	99% {left:100%;}
+	100% {left:0%;}
+}
+
+@keyframes slide03 {
+	0% {left:0%;}
+	33% {left:0%;}
+	34% {left:200%;}
+	66% {left:200%;}
+	67% {left:100%;}
+	99% {left:100%;}
+	100% {left:0%;}
+}
+</style>
+
