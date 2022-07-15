@@ -79,6 +79,7 @@ public class MyPageController {
 		return "myPage/myPageCart";
 	}
 
+	
 	@RequestMapping("/myPageCart2.myPage") // 탑에서 장바구니 갈때
 	public String myPageCart2(HttpServletRequest req) {
 		HttpSession session = req.getSession();
