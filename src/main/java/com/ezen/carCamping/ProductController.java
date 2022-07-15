@@ -44,7 +44,9 @@ public class ProductController {
 	 * @param params
 	 * @return
 	 */
-
+   
+	
+	
 	@RequestMapping(value ="/goProduct.product",method = RequestMethod.GET)
 	public String goProduct(HttpServletRequest req,
 			@RequestParam (required = false) String mode,
