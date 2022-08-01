@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ <mapper namespace="com.ezen.carCamping.model.memberMapper">
+    <resultMap type="RegionDTO"	 id="regionMap">
+		<id column="region_num" property="region_num"/>
+		<result column="region_name" property="region_name"/>
+	</resultMap>
+    
+    <resultMap type="MemberDTO" id="memberMap">
+		<id column="mem_num" property="mem_num"/>
+		<result column="mem_id" property="mem_id"/>
+		<result column="mem_email" property="mem_email"/>
+		<result column="mem_password" property="mem_password"/>
+		<result column="mem_userName" property="mem_userName"/>
+		<result column="mem_nickName" property="mem_nickName"/>
+		<result column="mem_phone" property="mem_phone"/>
+		<result column="mem_birthday" property="mem_birthday"/>
+		<result column="mem_gender" property="mem_gender"/>
+		<result column="mem_point" property="mem_point"/>
+		<result column="mem_rentalCount" property="mem_rentalCount"/>
+		<result column="mem_sysdate" property="mem_sysdate"/>
+		<result column="mem_accept_email" property="mem_accept_email"/>
+		<result column="mem_accept_phone" property="mem_accept_phone"/>
+		<result column="mem_accept_privacy" property="mem_accept_privacy"/>
+		<result column="mem_denied" property="mem_denied"/>
+		<result column="mem_image" property="mem_image"/>
+		<result column="mem_summary" property="mem_summary"/>
+		<result column="mem_introduce" property="mem_introduce"/>
+		<result column="mem_reviewCount" property="mem_reviewCount"/>
+		<association property="regionDTO" javaType="RegionDTO" resultMap="regionMap">
+		</association>
+	</resultMap>
+
+   <select id="searchMemberID" parameterType="java.util.Map" resultMap="memberMap">
+      ${sql}
+   </select>
+   <select id="searchMemberPW" parameterType="java.util.Map" resultMap="memberMap">
+      ${sql}
+   </select>
+   <select id="getMemberId" parameterType="String" resultMap="memberMap">
+      select * from Member where mem_id=#{mem_id}
+   </select>
+   <insert id="insertMember" parameterType="memberDTO">
+      insert into Member(mem_id, mem_email, mem_password, mem_userName, mem_nickName, mem_phone, mem_birthday, mem_gender, region_num, mem_point, mem_rentalCount, mem_sysdate, mem_accept_email, mem_accept_phone, mem_accept_privacy, mem_denied, mem_image, mem_summary, mem_introduce, mem_reviewCount)
+      values(#{mem_id}, #{mem_email}, #{mem_password}, #{mem_userName}, #{mem_nickName}, #{mem_phone}, #{mem_birthday}, #{mem_gender}, #{regionDTO.region_num}, 0, 0, now(), #{mem_accept_email},#{mem_accept_phone}, #{mem_accept_privacy}, 1, #{mem_image}, #{mem_summary}, #{mem_introduce},0)
+   </insert>
+   <select id="getMemberNick" parameterType="String" resultMap="memberMap">
+      select * from Member where mem_nickName=#{mem_nickName}
+   </select>
+   <select id="getMemberEmail" parameterType="String" resultMap="memberMap">
+      select * from Member where mem_email=#{mem_email}
+   </select>
+   <update id="updateMember" parameterType= "memberDTO">
+   update Member set  mem_nickName= #{mem_nickName}, mem_image = #{mem_image}, mem_phone= #{mem_phone}, mem_birthday= #{mem_birthday}, region_num= #{regionDTO.region_num}, mem_point= #{mem_point}, mem_summary= #{mem_summary}, mem_introduce= #{mem_introduce}, mem_accept_email= #{mem_accept_email}, mem_accept_phone= #{mem_accept_phone}, mem_accept_privacy= #{mem_accept_privacy}, mem_password= #{mem_password} where mem_num= #{mem_num}
+   </update>
+
+   <select id="getMember" resultMap="memberMap" parameterType="int">
+		select a.*,b.* from Member a join Region b on a.region_num = b.region_num where a.mem_num = #{mem_num}
+	</select>
+	
+	<select id="getMemberPassword" parameterType="int" resultType="String">
+		select mem_password from Member where mem_num=#{mem_num}
+	</select>
+	
+	<delete id="deleteMember" parameterType="java.util.Map"> 
+		delete from Member where mem_num=#{mem_num} and mem_password=#{mem_password}
+	</delete>
+   <!-- 박혜성 : 임시비밀번호 발급 -->
+	<select id = "getMemberByIdNEmail" parameterType="java.util.Map" resultType="MemberDTO">
+		select * from Member where mem_id = #{mem_id} and mem_email = #{mem_email}
+	</select>
+	<update id="updatePassword" parameterType = "java.util.Map" >
+		update Member set mem_password=#{mem_password} where mem_num = #{mem_num}
+	</update>
+	<!-- 박혜성 : 로그인 성공 시, Loginlog insert -->
+
+</mapper>

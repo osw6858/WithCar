@@ -1,0 +1,280 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+ 	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+	 	
+<mapper namespace="com.ezen.carCamping.model.productMapper"> 
+
+<resultMap id="brandCategoryMap" type="BrandCategoryDTO">
+		<id column="brand_num" property="brand_num"/>
+		<result column="brand_name" property="brand_name"/>
+	</resultMap>
+	
+	<resultMap id="productCategoryMap" type="ProductCategoryDTO">
+		<id column="pc_num" property="pc_num"/>
+		<result column="pc_name" property="pc_name"/>
+	</resultMap>
+	
+	<resultMap id="productMap" type="ProductDTO">
+		<id column="prod_num" property="prod_num"/>
+		<result column="prod_name" property="prod_name"/>
+		<result column="prod_popular" property="prod_popular"/>
+		<result column="prod_price" property="prod_price"/>
+		<result column="prod_viewImage1" property="prod_viewImage1"/>
+		<result column="prod_viewImage2" property="prod_viewImage2"/>
+		<result column="prod_viewImage3" property="prod_viewImage3"/>
+		<result column="prod_viewImage4" property="prod_viewImage4"/>
+		<result column="prod_viewImage5" property="prod_viewImage5"/>
+		<result column="prod_summary" property="prod_summary"/>
+		<result column="prod_viewContent" property="prod_viewContent"/>
+		<result column="prod_sysdate" property="prod_sysdate"/>
+		<result column="prod_update" property="prod_update"/>
+		<result column="prod_reviewScore" property="prod_reviewScore"/>
+		<result column="prod_reviewCount" property="prod_reviewCount"/>
+		<association property="brandCategoryDTO" javaType="BrandCategoryDTO" resultMap="brandCategoryMap">
+		</association>
+		<association property="productCategoryDTO" javaType="ProductCategoryDTO" resultMap="productCategoryMap">
+		</association>
+	</resultMap>
+	
+	
+	<resultMap type="MemberDTO" id="memberMap">
+		<id column="mem_num" property="mem_num"/>
+		<result column="mem_id" property="mem_id"/>
+		<result column="mem_email" property="mem_email"/>
+		<result column="mem_password" property="mem_password"/>
+		<result column="mem_userName" property="mem_userName"/>
+		<result column="mem_nickName" property="mem_nickName"/>
+		<result column="mem_phone" property="mem_phone"/>
+		<result column="mem_birthday" property="mem_birthday"/>
+		<result column="mem_gender" property="mem_gender"/>
+		<result column="mem_point" property="mem_point"/>
+		<result column="mem_rentalCount" property="mem_rentalCount"/>
+		<result column="mem_sysdate" property="mem_sysdate"/>
+		<result column="mem_accept_email" property="mem_accept_email"/>
+		<result column="mem_accept_phone" property="mem_accept_phone"/>
+		<result column="mem_accept_privacy" property="mem_accept_privacy"/>
+		<result column="mem_denied" property="mem_denied"/>
+		<result column="mem_image" property="mem_image"/>
+		<result column="mem_summary" property="mem_summary"/>
+		<result column="mem_introduce" property="mem_introduce"/>
+		<result column="mem_reviewCount" property="mem_reviewCount"/>
+		<association property="regionDTO" javaType="RegionDTO" resultMap="regionMap">
+		</association>
+	</resultMap>
+		<resultMap type="RegionDTO"	 id="regionMap">
+		<id column="region_num" property="region_num"/>
+		<result column="region_name" property="region_name"/>
+	</resultMap>
+	<resultMap id="reviewProductMap" type="ReviewProductDTO">
+		<id column="rp_num" property="rp_num"/>
+		<result column="rp_title" property="rp_title"/>
+		<result column="rp_sysdate" property="rp_sysdate"/>
+		<result column="rp_summaryContent" property="rp_summaryContent"/>
+		<result column="rp_content" property="rp_content"/>
+		<result column="rp_score" property="rp_score"/>
+		<result column="rp_image1" property="rp_image1"/>
+		<result column="rp_image2" property="rp_image2"/>
+		<result column="rp_image3" property="rp_image3"/>
+		<result column="rp_image4" property="rp_image4"/>
+		<result column="rp_image5" property="rp_image5"/>
+		<result column="rp_popular" property="rp_popular"/>
+		<result column="rp_readCount" property="rp_readCount"/>
+		<result column="rp_likeCount" property="rp_likeCount"/>
+		<result column="rp_adminConfirm" property="rp_adminConfirm"/>
+		<association property="memberDTO" javaType="MemberDTO" resultMap="memberMap">
+		</association>
+		<association property="productDTO" javaType="ProductDTO" resultMap="productMap">
+		</association>
+	</resultMap>
+	
+
+	<select id="getProduct" parameterType="int" resultMap="productMap">
+		select * from Product where prod_num = #{prod_num}
+	</select>
+
+		
+	<select id="listProdReview" resultMap="reviewProductMap">
+			select a.*,m.* from ReviewProduct a join Member m on a.mem_num = m.mem_num
+			where a.prod_num=#{prod_num} and a.rp_adminConfirm=0
+	</select>
+	
+	<select id="findProdReview" parameterType="java.util.Map" resultMap="reviewProductMap">
+		select * from ReviewProduct a join Member m on a.mem_num = m.mem_num 
+		where prod_num=${prod_num} and ${search} like concat('%',#{searchString},'%') and 		rp_adminConfirm=0
+
+	</select>
+	
+	<select id="getReviewView" parameterType="Integer"  resultMap="reviewProductMap">
+      select a.*,b.* from ReviewProduct as a left join Member as b on a.mem_num = b.mem_num 
+      where a.rp_num = #{rp_num}
+   </select>
+	
+
+	<!-- 시작 -->
+
+	<select id="findProduct" parameterType="java.util.Map" resultMap="productMap">
+	<!--  select a.*, b.brand_name from Product as a left join BrandCategory as b on a.brand_num = b.brand_num where ${search} = #{searchString}-->
+	 select a.*, b.brand_name from Product as a left join BrandCategory as b on a.brand_num = b.brand_num where ${search} like concat('%',#{searchString},'%') limit #{startRow},#{endRow}
+	</select> 
+	
+	<select id="popularProd" resultMap="productMap">
+	select * from Product where prod_popular = 0
+	</select>
+	
+	<select id="popularProdRank" resultMap="productMap">
+	select * from Product where prod_popular = 0 order by prod_reviewScore desc limit 3
+	</select>
+	
+	
+	<select id="listProductPrice" resultMap="productMap" parameterType="java.util.Map">
+		select * from Product order by prod_price asc limit #{startRow},#{endRow}
+	</select>
+	
+	<select id="listProductNew" resultMap="productMap" parameterType="java.util.Map">
+		select * from Product order by prod_num desc limit #{startRow},#{endRow}
+	</select>
+	
+	<select id="listProductPop" resultMap="productMap" parameterType="java.util.Map">
+		select * from Product order by prod_popular desc limit #{startRow},#{endRow} 
+	</select>
+
+	<select id="listProductsearchPrice" resultMap="productMap" parameterType="java.util.Map">
+		select a.*, b.* from Product as a left join BrandCategory as b on a.brand_num = b.brand_num 
+		where ${search} like concat('%',#{searchString},'%') order by prod_price desc limit #{startRow},#{endRow}
+	</select>
+	
+	<select id="listProductsearchNew" resultMap="productMap" parameterType="java.util.Map">
+		select a.*, b.* from Product as a left join BrandCategory as b on a.brand_num = b.brand_num
+     	 where ${search} like concat('%',#{searchString},'%') order by prod_num desc limit #{startRow},#{endRow}
+	</select>
+	
+	<select id="listProductsearchPop" resultMap="productMap" parameterType="java.util.Map">
+		select a.*, b.* from songsama.Product as a left join songsama.BrandCategory as b on a.brand_num = b.brand_num 
+		where  ${search}  like concat('%',#{searchString},'%') and prod_popular=0 order by prod_reviewScore desc limit #{startRow},#{endRow}
+	</select>
+
+
+	<select id="getAgency" resultType="AgencyDTO">
+		select * from Agency
+	</select>
+	
+	<update id="plusReviewReadCount" parameterType="Integer">
+		update ReviewProduct set rp_readCount=rp_readCount+1 where rp_num = #{rp_num}
+	</update>
+	
+	<update id="minReviewReadCount" parameterType="Integer">
+		update ReviewProduct set rp_readCount=rp_readCount-1 where rp_num = #{rp_num}
+	</update>
+	
+	<update id="plusLikeCount" parameterType="Integer">
+		update ReviewProduct set rp_likeCount=rp_likeCount+1 where rp_num = #{rp_num}
+	</update>
+	
+	<update id="minusLikeCount" parameterType="Integer">
+      update ReviewProduct set rp_likeCount=rp_likeCount-1 where rp_num = #{rp_num}
+   </update>
+
+	
+
+	<!-- 전체 리스트 -->
+	<select id="listProduct" resultMap="productMap" parameterType="java.util.Map">
+		select a.*, b.brand_name from Product as a left join
+		 BrandCategory as b on a.brand_num = b.brand_num limit #{startRow},#{endRow} 
+	</select>
+
+	<select id="listProductMain" resultMap="productMap">
+		 SELECT * FROM Product 
+	</select>
+	
+	<!-- 페이지 카운트 -->
+	<select resultType="int" id="listProductMainCount" parameterType="int">
+		select count(*) from Product
+	</select>
+
+	<!-- 0627 : 박혜성 추가 :  검색 로우 카운트 -->
+	<select id="countProductSeacrch" parameterType="java.util.Map" resultType="Integer">
+	 select count(*) from Product as a left join BrandCategory as b on a.brand_num = b.brand_num where ${search} like concat('%',#{searchString},'%')
+	</select>
+	
+	<!-- 리뷰 좋아요  -->
+	<select id="recountProductReviewLike" parameterType="Integer" resultType="Integer">
+		select a.rp_likeCount from ReviewProduct a where rp_num = #{rp_num}
+	</select>
+	<!--리뷰 좋아요 추가 & 삭제  -->
+	<insert id="insertProductReviewLikeLog" parameterType="Map">
+		insert into ReviewProductLikeLog (mem_num,rp_num) values
+		((select b.mem_num from Member b where b.mem_id = #{mem_id}),#{rp_num})
+	</insert>
+	<delete id="deleteProductReviewLikeLog" parameterType="Map">
+		delete from ReviewProductLikeLog a where a.rp_num=#{rp_num} and a.mem_num in
+		(select * from
+		(select a.mem_num from ReviewProductLikeLog,Member b where a.mem_num = b.mem_num and b.mem_id =#{mem_id}) as result)
+	</delete>
+	<!-- 리뷰 좋아요 내역 검사  -->
+	<select id="checkProductReviewLikeLog" parameterType="Map" resultType="Integer">
+		select count(*) from ReviewProductLikeLog a,Member b
+		where a.mem_num = b.mem_num and b.mem_id = #{mem_id} and a.rp_num = #{rp_num}
+	</select>
+		<!-- 리뷰 상세보기 조회수  -->
+	<update id="addProductReviewReadCount" parameterType="Integer">
+		update ReviewProduct set rp_readCount=rp_readCount+1 where rp_num = #{rp_num}
+	</update>
+	<!--브랜드 검색 로우 카운트  -->
+	<select resultType="int" id="listProductbrandSearch" parameterType="String">
+		select count(*) from Product as a left join BrandCategory as b on a.brand_num = b.brand_num where brand_name like concat('%',#{searchString},'%')
+	</select> 
+	
+	<select id="listReviewsearchLike" resultMap="reviewProductMap"
+      parameterType="java.util.Map">
+      select * from ReviewProduct,Product
+      where ReviewProduct.prod_num=#{prod_num} and
+      ReviewProduct.prod_num = Product.prod_num and
+      ReviewProduct.rp_adminConfirm=0 and ${search} like
+      concat('%',#{searchString},'%') order by ReviewProduct.rp_likeCount desc
+   </select>
+
+   <select id="listReviewsearchSysdate" resultMap="reviewProductMap"
+      parameterType="java.util.Map">
+      select * from ReviewProduct,Product
+      where ReviewProduct.prod_num=#{prod_num} and
+      ReviewProduct.prod_num = Product.prod_num and
+      ReviewProduct.rp_adminConfirm=0 and ${search} like
+      concat('%',#{searchString},'%') order by ReviewProduct.rp_sysdate desc
+   </select>
+
+   <select id="listReviewsearchScore" resultMap="reviewProductMap"
+      parameterType="java.util.Map">
+      select * from ReviewProduct,Product
+      where ReviewProduct.prod_num=#{prod_num} and
+      ReviewProduct.prod_num = Product.prod_num and
+      ReviewProduct.rp_adminConfirm=0 and ${search} like
+      concat('%',#{searchString},'%') order by ReviewProduct.rp_score desc
+   </select>
+   
+   <select id="R_orderByScore" resultMap="reviewProductMap">
+      select * from ReviewProduct,Product where ReviewProduct.prod_num=#{prod_num}
+      and ReviewProduct.prod_num = Product.prod_num and
+      ReviewProduct.rp_adminConfirm=0 order by ReviewProduct.rp_score desc
+   </select>
+
+   <select id="R_orderBysysdate" resultMap="reviewProductMap">
+      select * from ReviewProduct,Product where ReviewProduct.prod_num=#{prod_num}
+      and ReviewProduct.prod_num = Product.prod_num and
+      ReviewProduct.rp_adminConfirm=0 order by ReviewProduct.rp_sysdate desc
+   </select>
+
+   <select id="R_orderByLike" resultMap="reviewProductMap">
+      select * from ReviewProduct,Product where ReviewProduct.prod_num=#{prod_num}
+      and ReviewProduct.prod_num = Product.prod_num and
+      ReviewProduct.rp_adminConfirm=0 order by ReviewProduct.rp_likeCount
+      desc
+   </select> 
+   
+   <select id="countReviewProd" parameterType="Integer" resultType="Integer">
+		SELECT count(*) from ReviewProduct a,Product b 
+		where a.prod_num = b.prod_num and b.prod_num = #{prod_num} and a.rp_adminConfirm=0
+	</select> 	
+   
+</mapper>
+

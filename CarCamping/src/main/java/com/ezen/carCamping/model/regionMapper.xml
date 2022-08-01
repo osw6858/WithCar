@@ -1,0 +1,255 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+ 	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ezen.carCamping.model.regionMapper">
+
+
+	<resultMap type="RegionDTO"	 id="regionMap">
+		<id column="region_num" property="region_num"/>
+		<result column="region_name" property="region_name"/>
+	</resultMap>
+	
+	<resultMap type="CarCampingRegionDTO" id="carCampingRegionMap">
+		<id column="ccr_num" property="ccr_num"/>
+		<result column="ccr_name" property="ccr_name"/>
+		<result column="ccr_car" property="ccr_car"/>
+		<result column="ccr_pricePerDay" property="ccr_pricePerDay"/>
+		<result column="ccr_toilet" property="ccr_toilet"/>
+		<result column="ccr_restroom" property="ccr_restroom"/>
+		<result column="ccr_water" property="ccr_water"/>
+		<result column="ccr_market" property="ccr_market"/>
+		<result column="ccr_river" property="ccr_river"/>
+		<result column="ccr_ground" property="ccr_ground"/>
+		<result column="ccr_likeCount" property="ccr_likeCount"/>
+		<result column="ccr_score" property="ccr_score"/>
+		<result column="ccr_popular" property="ccr_popular"/>
+		<result column="ccr_viewImage1" property="ccr_viewImage1"/>
+		<result column="ccr_viewImage2" property="ccr_viewImage2"/>
+		<result column="ccr_viewImage3" property="ccr_viewImage3"/>
+		<result column="ccr_viewImage4" property="ccr_viewImage4"/>
+		<result column="ccr_viewImage5" property="ccr_viewImage5"/>
+		<result column="ccr_summary" property="ccr_summary"/>
+		<result column="ccr_content" property="ccr_content"/>
+		<result column="ccr_reviewCount" property="ccr_reviewCount"/>
+		<association property="regionDTO" javaType="RegionDTO" resultMap="regionMap">
+		</association>
+	</resultMap>
+		<resultMap id="reviewRegionMap" type="ReviewRegionDTO">
+		<id column="review_num" property="review_num"/>
+		<result column="review_title" property="review_title"/>
+		<result column="review_sysdate" property="review_sysdate"/>
+		<result column="review_summaryContent" property="review_summaryContent"/>
+		<result column="review_regionContent" property="review_regionContent"/>
+		<result column="review_regionScore" property="review_regionScore"/>
+		<result column="review_regionImage1" property="review_regionImage1"/>
+		<result column="review_regionImage2" property="review_regionImage2"/>
+		<result column="review_regionImage3" property="review_regionImage3"/>
+		<result column="review_regionImage4" property="review_regionImage4"/>
+		<result column="review_regionImage5" property="review_regionImage5"/>
+		<result column="review_popular" property="review_popular"/>
+		<result column="review_readCount" property="review_readCount"/>
+		<result column="review_likeCount" property="review_likeCount"/>
+		<result column="review_adminConfirm" property="review_adminConfirm"/>
+		<association property="memberDTO" javaType="MemberDTO" resultMap="memberMap">
+		</association>
+		<association property="carCampingRegionDTO" javaType="CarCampingRegionDTO" resultMap="carCampingRegionMap">
+		</association>
+	</resultMap>
+	<resultMap type="MemberDTO" id="memberMap">
+		<id column="mem_num" property="mem_num"/>
+		<result column="mem_id" property="mem_id"/>
+		<result column="mem_email" property="mem_email"/>
+		<result column="mem_password" property="mem_password"/>
+		<result column="mem_userName" property="mem_userName"/>
+		<result column="mem_nickName" property="mem_nickName"/>
+		<result column="mem_phone" property="mem_phone"/>
+		<result column="mem_birthday" property="mem_birthday"/>
+		<result column="mem_gender" property="mem_gender"/>
+		<result column="mem_point" property="mem_point"/>
+		<result column="mem_rentalCount" property="mem_rentalCount"/>
+		<result column="mem_sysdate" property="mem_sysdate"/>
+		<result column="mem_accept_email" property="mem_accept_email"/>
+		<result column="mem_accept_phone" property="mem_accept_phone"/>
+		<result column="mem_accept_privacy" property="mem_accept_privacy"/>
+		<result column="mem_denied" property="mem_denied"/>
+		<result column="mem_image" property="mem_image"/>
+		<result column="mem_summary" property="mem_summary"/>
+		<result column="mem_introduce" property="mem_introduce"/>
+		<result column="mem_reviewCount" property="mem_reviewCount"/>
+		<association property="regionDTO" javaType="RegionDTO" resultMap="regionMap">
+		</association>
+	</resultMap>
+	
+	<select id="listRegion" resultType="RegionDTO"> 
+		select * from Region 
+	</select>
+	
+	<select id="selectRegion" parameterType="Integer" resultType="RegionDTO"> <!-- xx지역 인기글 -->
+		select * from Region where region_num = #{region_num}
+	</select> 
+	
+	<select id="listCcr" parameterType="Integer" resultType ="CarCampingRegionDTO">
+		select a.* from CarCampingRegion a, Region b where a.region_num = b.region_num and b.region_num =#{region_num}
+	</select>
+	<select id="listCarCampingRegionHotRegion" parameterType="Integer" resultMap="carCampingRegionMap"> <!-- 지역별 차박지 HOT차박지  -->
+      select a.* from CarCampingRegion a where region_num = #{region_num} and a.ccr_popular=0
+      order by ratingRegion(a.ccr_num,a.ccr_likeCount,a.ccr_reviewCount) desc limit 4
+   </select>
+   
+   <select id="listHotRegion" resultMap="carCampingRegionMap"> <!-- HOT 차박지 -->
+   select a.* from CarCampingRegion a where a.ccr_popular = 0
+   order by ratingRegion(a.ccr_num,a.ccr_likeCount,a.ccr_reviewCount) desc limit 10
+   </select>
+	
+	<select id="listRecommandRegion" resultType="CarCampingRegionDTO"> <!-- 추천 차박지 -->
+		SELECT * FROM CarCampingRegion where ccr_popular=1 and ccr_score>=4 order by ccr_score desc limit 10
+	</select>
+	
+	<select id="selectRegionByCcrnum" parameterType="Integer" resultMap="carCampingRegionMap">
+		select * from CarCampingRegion where ccr_num = #{ccr_num} 
+	</select>
+	
+	
+	<select id="listCcrReview" parameterType="Map" resultMap="reviewRegionMap">
+		select c.*,m.*from
+		(select @ROWNUM :=@ROWNUM +1 as ROWNUM,a.* from ReviewRegion a,(select @ROWNUM:=0) b
+		where a.ccr_num=#{ccr_num} and a.review_adminConfirm=0 order by ${orderBy} desc) c join Member m 
+		on c.mem_num = m.mem_num limit #{startRow},#{endRow}
+	</select>
+	
+	<select id="countReviewCcrnum" parameterType="Integer" resultType="Integer">
+		select count(*) from ReviewRegion a,CarCampingRegion b where a.ccr_num=#{ccr_num} and a.ccr_num=b.ccr_num and a.review_adminConfirm=0
+	</select>
+
+
+	<!-- 검색 -->
+	<select id="listCcrReviewSearch" parameterType="Map" resultMap="reviewRegionMap">
+		select c.*,m.* from
+		(select @ROWNUM :=@ROWNUM +1 as ROWNUM,a.* from ReviewRegion a,(select @ROWNUM:=0) b 
+		where a.ccr_num=#{ccr_num} and a.review_adminConfirm=0 and a.${search} like CONCAT('%',#{searchString},'%')
+		order by ${orderBy} desc) c join Member m  on c.mem_num = m.mem_num
+		limit #{startRow},#{endRow}
+	</select>
+	
+	<select id="countReviewSearch" parameterType="Map" resultType="Integer">
+		select count(*)
+		from ReviewRegion a,CarCampingRegion b
+		where a.ccr_num=#{ccr_num} and a.ccr_num=b.ccr_num and a.review_adminConfirm=0 and a.${search} like CONCAT('%',#{searchString},'%')
+	</select>
+	
+	<!--작성자 검색  -->
+	<select id="listCcrReviewWriterSearch" parameterType="Map" resultMap="reviewRegionMap">
+	select * from
+	(select @ROWNUM :=@ROWNUM +1 as ROWNUM,a.*
+	from ReviewRegion as a,(select @ROWNUM:=0) b
+	where a.ccr_num=#{ccr_num} and a.review_adminConfirm=0)c,Member d
+	where c.mem_num = d.mem_num and d.${search} like CONCAT('%',#{searchString},'%') order by c.${orderBy} desc
+ 	limit #{startRow},#{endRow}
+	</select>
+	
+	<select id="countRevieWrietrSearch" parameterType="Map" resultType="Integer">
+	select count(*) from
+	(select a.* from ReviewRegion a,CarCampingRegion b where a.ccr_num=#{ccr_num} and a.ccr_num=b.ccr_num and a.review_adminConfirm=0)c,Member d
+	where c.mem_num = d.mem_num and d.${search} like CONCAT('%',#{searchString},'%')
+	</select>
+	
+	<!-- 리뷰 상세보기 조회수  -->
+	<update id="addReviewReadCount" parameterType="Integer">
+		update ReviewRegion set review_readCount=review_readCount+1 where review_num = #{review_num}
+	</update>
+	<!-- 차박지 : 좋아요 클릭 시 종아요 수 증가-->
+	<update id="addLikeCountRegion" parameterType="Integer">
+		update CarCampingRegion set ccr_likeCount=ccr_likeCount+1 where ccr_num=#{ccr_num}
+	</update>
+	<!-- 차박지 : 좋아요 다시 클릭시 좋아요 수 감소 -->
+	<update id="subLikeCountRegion" parameterType="Integer">
+		update CarCampingRegion set ccr_likeCount=ccr_likeCount-1 where ccr_num=#{ccr_num}
+	</update>
+	
+	<!-- 차박지 리뷰 : 좋아요 클릭 시 종아요 수 증가-->
+	<update id="addLikeCountReview" parameterType="Integer">
+		update ReviewRegion set review_likeCount=review_likeCount+1 where review_num=#{review_num}
+	</update>
+	<!-- 차박지 리뷰: 좋아요 다시 클릭시 좋아요 수 감소 -->
+	<update id="subLikeCountReview" parameterType="Integer" >
+		update ReviewRegion set review_likeCount=review_likeCount-1 where review_num=#{review_num}
+	</update>
+
+	<!--리뷰 상세보기   -->
+	<select id="selectReviewDetail" parameterType="Integer" resultMap="reviewRegionMap">
+		select * from ReviewRegion c join Member m on c.mem_num = m.mem_num where review_num = #{review_num}
+	</select>
+	<!-- 지역  좋아요 -->
+	<!-- 지역 좋아요 수 가져오기  -->
+	<select id="recountRegionLike" parameterType="Integer" resultType="Integer">
+		select a.ccr_likeCount from CarCampingRegion a where ccr_num = #{ccr_num}
+	</select>
+	<!--지역 좋아요 추가 & 삭제  -->
+	<insert id="insertRegionLikeLog" parameterType="Map">
+		insert into RegionLikeLog (mem_num,ccr_num) values
+		((select b.mem_num from Member b where b.mem_id = #{mem_id}),#{ccr_num})
+	</insert>
+	<delete id="deleteRegionLikeLog" parameterType="Map">
+		delete from RegionLikeLog a where a.ccr_num=#{ccr_num} and a.mem_num in
+		(select * from
+		(select a.mem_num from RegionLikeLog,Member b where a.mem_num = b.mem_num and b.mem_id =#{mem_id}) as result)
+	</delete>
+	<!-- 지역 좋아요 내역 검사  -->
+	<select id="checkRegionLikeLog" parameterType="Map" resultType="Integer">
+		select count(*) from RegionLikeLog a,Member b
+		where a.mem_num = b.mem_num and b.mem_id = #{mem_id} and a.ccr_num = #{ccr_num}
+	</select>
+	
+	<!-- 리뷰 좋아요  -->
+	<select id="recountReviewLike" parameterType="Integer" resultType="Integer">
+		select a.review_likeCount from ReviewRegion a where review_num = #{review_num}
+	</select>
+	<!--리뷰 좋아요 추가 & 삭제  -->
+	<insert id="insertReviewLikeLog" parameterType="Map">
+		insert into ReviewLikeLog (mem_num,review_num) values
+		((select b.mem_num from Member b where b.mem_id = #{mem_id}),#{review_num})
+	</insert>
+	<delete id="deleteReviewLikeLog" parameterType="Map">
+		delete from ReviewLikeLog a where a.review_num=#{review_num} and a.mem_num in
+		(select * from
+		(select a.mem_num from ReviewLikeLog,Member b where a.mem_num = b.mem_num and b.mem_id =#{mem_id}) as result)
+	</delete>
+	<!-- 리뷰 좋아요 내역 검사  -->
+	<select id="checkReviewLikeLog" parameterType="Map" resultType="Integer">
+		select count(*) from ReviewLikeLog a,Member b
+		where a.mem_num = b.mem_num and b.mem_id = #{mem_id} and a.review_num = #{review_num}
+	</select>
+	
+	<!-- 리뷰 수 가져오기 -->
+	<select id="countReviewCcr" parameterType="Integer" resultType="Integer">
+		SELECT count(*) from ReviewRegion a,CarCampingRegion b 
+		where a.ccr_num = b.ccr_num and b.ccr_num = #{ccr_num} and a.review_adminConfirm=0
+	</select> 	
+
+	
+	<select resultMap="carCampingRegionMap" id="listPopRegion" parameterType="int">
+	 select a.*,b.* from CarCampingRegion a join Region b on a.region_num = b.region_num and a.region_num = #{region_num}
+	  where a.region_num = #{region_num} limit #{startRow},#{endRow}
+	</select>
+
+
+	   <select resultType="int" id="listRegionCount" parameterType="int">
+    select count(*) from CarCampingRegion where region_num = #{region_num} 
+   </select> 
+   
+   <select resultType="int" id="listRegionCountSearch" parameterType="Map">
+    select count(*) from CarCampingRegion where region_num = #{region_num} and ${search} like CONCAT('%',#{searchString},'%') 
+   </select> 
+
+   <select id="listAllCarCamping" resultMap="carCampingRegionMap" parameterType="Map">
+       SELECT * FROM CarCampingRegion WHERE region_num = #{region_num} ORDER BY ${orderBy} DESC limit #{startRow},#{endRow}
+   </select>
+   
+   <select id="listAllCarCampingSearch" resultMap="carCampingRegionMap" parameterType="Map">
+       SELECT * FROM CarCampingRegion WHERE region_num = #{region_num} and ${search} like CONCAT('%',#{searchString},'%') 
+       ORDER BY ${orderBy} DESC limit #{startRow},#{endRow}
+   </select>
+
+	
+</mapper>

@@ -1,0 +1,92 @@
+@charset "EUC-KR";
+/*
+carcampingmap - ccm - hs.
+*/
+	#ccm-doc-ds, .ccm-t7-hs {
+		margin: auto;
+		text-align: left;
+		width: 70%;
+		min-width: 750px;
+	}
+	.ccm-b-hs {
+		position: relative;
+	}
+	.ccm-b-hs {
+		_position: static;
+	} /* for IE < 7 */
+	#ccm-main-hs .ccm-b-hs {
+		position: static;
+	}
+	#ccm-main-hs {
+		width: 100%;
+	}
+	.ccm-t7-hs #ccm-main-hs .ccm-b-hs {
+		display: block;
+		margin: 0 0 1em 0;
+	}
+	#ccm-main-hs .ccm-b-hs {
+		float: none;
+		width: auto;
+	}
+	.ccm-gc-hs .ccm-u-hs {
+		float: right;
+		display: inline;
+	}
+	.ccm-gc-hs div.first, .ccm-gc-hs div.first div.first {
+		float: left;
+	}
+	.ccm-gc-hs .ccm-u-hs {
+		float: left;
+		margin-left: 2%;
+		width: 49%;
+	}
+	.ccm-gc-hs div.first {
+		width: 49%;
+		margin-left: 0;
+	}
+	#ccm-bd-hs:after, .ccm-gc-hs:after {
+		content: ".";
+		display: block;
+		height: 0;
+		clear: both;
+		visibility: hidden;
+	}
+	#ccm-bd-hs, .ccm-gc-hs {
+		zoom: 1;
+	}
+
+	/* Basic Element Formatting */
+	.map_content-hs, .region_content-hs {
+		height: 500px;
+		/* background: #CCC8B3; */
+		border-top: #FFFFFF 2px solid;
+		margin: 0;
+		padding: 0;
+	}
+	#hot-loaction-title-hs {
+		height: 50px;
+		/* background: #F6F0E0; */
+		margin: 0;
+		padding: 0;
+	}
+	#hot-loaction-content-hs {
+		height: 400px;
+		/* background: #F6F0E0; */
+		border-top: #FFFFFF 5px solid;
+		margin: 0;
+		padding: 0;
+	}
+	#recommand-loaction-titlet-hs {
+		height: 50px;
+		/* background: #F6F0E0; */
+		border-top: #FFFFFF 14px solid;
+		margin: 0;
+		padding: 0;
+	}
+	#recommand-loaction-content-hs {
+		height: 400px;
+		/* background: #F6F0E0; */
+		border-top: #FFFFFF 5px solid;
+		margin: 0;
+		padding: 0;
+	}
