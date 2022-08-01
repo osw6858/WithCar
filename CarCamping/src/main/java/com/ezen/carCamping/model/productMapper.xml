@@ -136,7 +136,7 @@
 	</select>
 	
 	<select id="listProductPop" resultMap="productMap" parameterType="java.util.Map">
-		select * from Product order by prod_popular desc limit #{startRow},#{endRow} 
+		select * from Product order by prod_reviewScore desc limit #{startRow},#{endRow} 
 	</select>
 
 	<select id="listProductsearchPrice" resultMap="productMap" parameterType="java.util.Map">
@@ -151,7 +151,7 @@
 	
 	<select id="listProductsearchPop" resultMap="productMap" parameterType="java.util.Map">
 		select a.*, b.* from songsama.Product as a left join songsama.BrandCategory as b on a.brand_num = b.brand_num 
-		where  ${search}  like concat('%',#{searchString},'%') and prod_popular=0 order by prod_reviewScore desc limit #{startRow},#{endRow}
+		where  ${search}  like concat('%',#{searchString},'%') order by prod_reviewScore desc limit #{startRow},#{endRow}
 	</select>
 
 
