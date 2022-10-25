@@ -17,5 +17,4 @@ Spring MVC패턴을 이용한 Maven프로젝트로 캠핑카 예약 플랫폼 Va
 7. Ajax비동기 통신을 이용한 좋아요 기능 구현
 8. 용품&리뷰 좋아요 관리 페이지 
 
-### 기술스택
-Java, JavaScript, Spring, HTML, JSP, JSTL, Mybatis, My-sql, Oracle, mariaDB, tomcat
+
