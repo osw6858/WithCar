@@ -8,10 +8,10 @@ WithCar은 자바 스프링(Spring)과 MySQL을 활용한 MVC 패턴을 기반�
 - 리뷰 및 평점 기능
 
 ## 주요 기술 스택
-![Java](https://img.shields.io/badge/Java-버전-orange)
-![Spring Framework](https://img.shields.io/badge/Spring_Framework-버전-brightgreen)
-![MySQL](https://img.shields.io/badge/MySQL-버전-blue)
-![Bootstrap](https://img.shields.io/badge/Bootstrap-버전-purple)
+![Java](https://img.shields.io/badge/Java-orange)
+![Spring Framework](https://img.shields.io/badge/Spring_Framework-brightgreen)
+![MySQL](https://img.shields.io/badge/MySQL-blue)
+![Bootstrap](https://img.shields.io/badge/Bootstrap-purple)
 ![MVC 패턴](https://img.shields.io/badge/MVC_패턴-활용-red)
 
 
