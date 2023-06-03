@@ -1,20 +1,17 @@
 # WithCar
+WithCar은 자바 스프링(Spring)과 MySQL을 활용한 MVC 패턴을 기반으로 한 자동차 공유 페이지입니다. 이 페이지는 사용자들이 자동차를 대여하거나 자신의 자동차를 공유할 수 있는 기능을 제공하여 편리하고 경제적인 자동차 이용을 가능하게 합니다.
 
-### 간단 프로젝트 소개
+## 주요 기능
+- 사용자 등록 및 로그인
+- 자동차 등록 및 대여
+- 실시간 예약과 결제 시스템
+- 리뷰 및 평점 기능
 
-Spring MVC패턴을 이용한 Maven프로젝트로 캠핑카 예약 플랫폼 Vanpl에서 영감을 받아 캠핑용품 대여, 캠핑장 위치 및 상세 정보 제공, 리뷰를 통한 후기 공유를 목적으로 개발 하였습니다.
-
-### 팀 구성 & 진행기간
-총 6명이 팀을 이루어 5주간 프로젝트를 진행하였습니다.
-
-### 맡은 역할 & 구현기능
-1. 프로젝트 조장
-2. 디지털 프로토타입 작성
-3. ERD를 이용한 용품관련 테이블 설계
-4. Bootstrap, JSP, HTML, JSTL을 이용한 용품관련 뷰페이지 작성
-5. 용품목록&용품리뷰 페이지 구현(브랜드별, 상품명별 검색기능 , 페이징, 기본정렬&검색후 정렬)
-6. 용품 대여&장바구니 구현
-7. Ajax비동기 통신을 이용한 좋아요 기능 구현
-8. 용품&리뷰 좋아요 관리 페이지 
+## 주요 기술 스택
+![Java](https://img.shields.io/badge/Java-버전-orange)
+![Spring Framework](https://img.shields.io/badge/Spring_Framework-버전-brightgreen)
+![MySQL](https://img.shields.io/badge/MySQL-버전-blue)
+![Bootstrap](https://img.shields.io/badge/Bootstrap-버전-purple)
+![MVC 패턴](https://img.shields.io/badge/MVC_패턴-활용-red)
 
 
